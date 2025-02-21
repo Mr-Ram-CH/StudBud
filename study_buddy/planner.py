@@ -46,9 +46,8 @@ def study_planner_tab():
     # Input fields
     topic = st.text_input("Enter the topic you want to study:")
     days = st.number_input("Number of days:", min_value=1, max_value=30, value=7)
-
-    # Dynamic hours limit: max_value = days * 24
     max_hours = days * 24
+
     hours = st.number_input(
         "Total hours available:",
         min_value=1,
@@ -63,12 +62,15 @@ def study_planner_tab():
                 study_plan = generate_study_plan(topic, hours, days)
                 st.success("Study Plan Generated!")
                 st.write(study_plan_template.replace("{{STUDY_PLAN}}", study_plan), unsafe_allow_html=True)
-                pdf_buffer = generate_pdf(study_plan)
-                st.download_button(
-                    label="Download Study Plan as PDF",
-                    data=pdf_buffer,
-                    file_name="study_plan.pdf",
-                    mime="application/pdf"
-                )
+
+                # Generate and download PDF
+                pdf_filename = generate_pdf(study_plan)
+                with open(pdf_filename, "rb") as file:
+                    st.download_button(
+                        label="Download Study Plan as PDF",
+                        data=file,
+                        file_name=pdf_filename,
+                        mime="application/pdf"
+                    )
         else:
             st.error("Please enter a topic.")
