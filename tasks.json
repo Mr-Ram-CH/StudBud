@@ -1,0 +1,14 @@
+[
+    {
+        "task": "C preparation",
+        "status": "Completed"
+    },
+    {
+        "task": "DSA",
+        "status": "In Progress"
+    },
+    {
+        "task": "EH",
+        "status": "Pending"
+    }
+]
